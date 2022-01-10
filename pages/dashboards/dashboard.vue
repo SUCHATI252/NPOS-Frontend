@@ -10,7 +10,7 @@
         lg="3"
         class="mt-5"
       >
-        <v-card class="d-flex justify-space-between pa-3">
+        <v-card class="d-flex justify-space-between px-3 py-5">
           <div>
             <div class="mt-n8 pa-4 v-sheet" :class="widget.color">
               <v-icon x-large dark>

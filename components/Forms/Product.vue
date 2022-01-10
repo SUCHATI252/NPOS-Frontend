@@ -131,6 +131,7 @@
 
 <script>
 export default {
+  name: 'FormsProduct',
   data: () => ({
     Product_dialog: false,
     mode: '',

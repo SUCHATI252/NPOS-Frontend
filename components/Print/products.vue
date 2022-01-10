@@ -45,6 +45,7 @@
 
 <script>
 export default {
+  name: 'PrintProduct',
   props: {
     data: {
       type: Array,

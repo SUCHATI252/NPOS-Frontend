@@ -54,6 +54,15 @@
             </v-tooltip>
 
             <v-divider class="mx-4" vertical />
+
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" :to="localePath('/dashboards/stores/recyclebin')" v-on="on">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </template>
+              <span>Recycle Bin</span>
+            </v-tooltip>
           </v-toolbar>
           <div class="py-2">
             <v-divider />
@@ -119,45 +128,6 @@
         print
       </v-btn>
     </v-card>
-
-    <v-dialog v-model="confirm" max-width="350">
-      <v-card class="pa-3">
-        <v-form ref="form_del" @submit.prevent="submitDeleteproduct">
-          <v-card-title class="headline">
-            ยืนยันการลบ?
-          </v-card-title>
-          <v-card-text>
-            เมื่อคุณยืนยันการลบ คุณจะไม่สามารถกู้คืนข้อมูลนี้ได้
-            <p>
-              Barcode <v-chip color="red lighten-4" class="ml-0 mr-2 black--text" label small>
-                {{ productNameDel }}
-              </v-chip>
-            </p>
-            <v-text-field
-              v-model="productCodeDel"
-              v-mask="mask_barcode"
-              label="Barcode"
-              :rules="[
-                v => !!v || 'enter Barcode',
-                v => (v && v.length >= 13) || 'Min 13 characters'
-              ]"
-              outlined
-              dense
-              class="px-5"
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn @click="confirm = false">
-              Cancel
-            </v-btn>
-            <v-btn color="success" type="submit">
-              Confirm
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
 
     <v-dialog v-model="allcategory_dialog" max-width="600">
       <v-card class="pa-5">
@@ -454,28 +424,16 @@ export default {
           this.$store.commit('LOADIND_DIALOG', false)
         })
     },
-    DeleteProduct (data) {
-      this.id = data.pd_id
-      this.productNameDel = data.pd_code
-      this.confirm = true
-    },
-    async submitDeleteproduct () {
-      if (this.$refs.form_del.validate()) {
-        this.confirm = false
-        await this.$axios.$delete(`/products/delete/${this.id}/${this.productCodeDel}`)
-          .then((res) => {
-            if (res.success) {
-              this.$store.commit('SET_SUCCESS', 'Delete Product success')
-            } else if (res.error_code) {
-              this.$store.commit('SET_ERROR', 'Error BARCODE')
-            } else {
-              this.$store.commit('SET_ERROR', 'Error Delete')
-            }
-            this.$fetch()
-            this.id = ''
-            this.productNameDel = ''
-          })
-      }
+    async DeleteProduct (data) {
+      await this.$axios.$delete(`/products/delete/${data.pd_id}`)
+        .then((res) => {
+          if (res.success) {
+            this.$store.commit('SET_SUCCESS', 'Delete Product success')
+          } else {
+            this.$store.commit('SET_ERROR', 'Error Delete')
+          }
+          this.$fetch()
+        })
     },
     SHOW_Barcode (item) {
       this.$refs.printbarcode.open(item.pd_code)
@@ -563,6 +521,9 @@ export default {
     },
     printproduct () {
       this.$refs.printproducts.print()
+    },
+    async getdata_in_recyclebin () {
+      this.products = await this.$axios.$post('/products/RecycleBin').then(res => res.products)
     }
   }
 }

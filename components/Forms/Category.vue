@@ -55,6 +55,7 @@
 
 <script>
 export default {
+  name: 'FormsCategory',
   data: () => ({
     category_dialog: false,
     mode: '',

@@ -1,92 +1,96 @@
 <template>
-  <v-form ref="form_reset" @submit.prevent="reset_password">
-    <v-card class="pa-5" rounded="lg" elevation="5">
-      <v-card-title class="title pt-0 justify-center">
-        <div>
-          <div class="d-flex align-start justify-center">
-            <v-icon size="100">
-              mdi-lock-reset
-            </v-icon>
-          </div>
-          <div class="d-flex align-end justify-center">
-            <span class="text-h4 font-weight-bold">
-              {{ $t('resetpassword.title') }}
-            </span>
-          </div>
-        </div>
-      </v-card-title>
-      <v-card-text>
-        <v-text-field
-          ref="code"
-          v-model="code"
-          v-mask="'######'"
-          autofocus
-          validate-on-blur
-          outlined
-          placeholder="000000"
-          prepend-inner-icon="mdi-shield-key-outline"
-          :label="$t('resetpassword.code_lbl')"
-          :rules="[
-            (v) => !! v || $t('resetpassword.val_code'),
-            (v) => v.length >= 6 || $t('resetpassword.val_min6')
-          ]"
-        />
+  <v-container class="fill-height justify-center">
+    <app-bar />
+    <v-col md="6" lg="4" sm="7">
+      <v-form ref="form_reset" @submit.prevent="reset_password">
+        <v-card class="pa-5" rounded="lg" elevation="5">
+          <v-card-title class="title pt-0 justify-center">
+            <div>
+              <div class="d-flex align-start justify-center">
+                <v-icon size="100">
+                  mdi-lock-reset
+                </v-icon>
+              </div>
+              <div class="d-flex align-end justify-center">
+                <span class="text-h4 font-weight-bold">
+                  {{ $t('resetpassword.title') }}
+                </span>
+              </div>
+            </div>
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              ref="code"
+              v-model="code"
+              v-mask="'######'"
+              autofocus
+              validate-on-blur
+              outlined
+              placeholder="000000"
+              prepend-inner-icon="mdi-shield-key-outline"
+              :label="$t('resetpassword.code_lbl')"
+              :rules="[
+                (v) => !! v || $t('resetpassword.val_code'),
+                (v) => v.length >= 6 || $t('resetpassword.val_min6')
+              ]"
+            />
 
-        <v-text-field
-          ref="new_password"
-          v-model="new_password"
-          counter
-          outlined
-          validate-on-blur
-          prepend-inner-icon="mdi-key-outline"
-          :label="$t('resetpassword.pass_new')"
-          :append-icon="showicon ? (showpass ? 'mdi-eye' : 'mdi-eye-off') : ''"
-          :type="showpass ? 'text' : 'password'"
-          :rules="[
-            (v) => !!v || $t('resetpassword.val_password'),
-            (v) => v.length >= 8 || $t('resetpassword.val_min8')
-          ]"
-          @click:append="showpass = !showpass"
-        />
-        <v-text-field
-          ref="new_pass_try"
-          v-model="new_pass_try"
-          counter
-          outlined
-          validate-on-blur
-          prepend-inner-icon="mdi-key-outline"
-          :label="$t('resetpassword.pass_confirm')"
-          :append-icon="showicon2 ? (showpass2 ? 'mdi-eye' : 'mdi-eye-off') : ''"
-          :type="showpass2 ? 'text' : 'password'"
-          :rules="[
-            (v) => !!v || $t('resetpassword.val_password'),
-            (v) => v.length >= 8 || $t('resetpassword.val_min8'),
-            confirm_password || $t('resetpassword.some_value')
-          ]"
-          @click:append="showpass2 = !showpass2"
-        />
-        <v-btn
-          large
-          block
-          type="submit"
-          color="primary"
-          v-text="$t('resetpassword.save')"
-        />
-      </v-card-text>
-      <v-card-actions class="mx-2">
-        <v-spacer />
-        <span class="caption grey--text">
-          {{ $t('resetpassword.time_left') }} : {{ Time }}
-        </span>
-      </v-card-actions>
-    </v-card>
-  </v-form>
+            <v-text-field
+              ref="new_password"
+              v-model="new_password"
+              counter
+              outlined
+              validate-on-blur
+              prepend-inner-icon="mdi-key-outline"
+              :label="$t('resetpassword.pass_new')"
+              :append-icon="showicon ? (showpass ? 'mdi-eye' : 'mdi-eye-off') : ''"
+              :type="showpass ? 'text' : 'password'"
+              :rules="[
+                (v) => !!v || $t('resetpassword.val_password'),
+                (v) => v.length >= 8 || $t('resetpassword.val_min8')
+              ]"
+              @click:append="showpass = !showpass"
+            />
+            <v-text-field
+              ref="new_pass_try"
+              v-model="new_pass_try"
+              counter
+              outlined
+              validate-on-blur
+              prepend-inner-icon="mdi-key-outline"
+              :label="$t('resetpassword.pass_confirm')"
+              :append-icon="showicon2 ? (showpass2 ? 'mdi-eye' : 'mdi-eye-off') : ''"
+              :type="showpass2 ? 'text' : 'password'"
+              :rules="[
+                (v) => !!v || $t('resetpassword.val_password'),
+                (v) => v.length >= 8 || $t('resetpassword.val_min8'),
+                confirm_password || $t('resetpassword.some_value')
+              ]"
+              @click:append="showpass2 = !showpass2"
+            />
+            <v-btn
+              large
+              block
+              type="submit"
+              color="primary"
+              v-text="$t('resetpassword.save')"
+            />
+          </v-card-text>
+          <v-card-actions class="mx-2">
+            <v-spacer />
+            <span class="caption grey--text">
+              {{ $t('resetpassword.time_left') }} : {{ Time }}
+            </span>
+          </v-card-actions>
+        </v-card>
+      </v-form>
+    </v-col>
+  </v-container>
 </template>
 
 <script>
 export default {
   name: 'ResetpasswordPage',
-  layout: 'guest',
   auth: 'guest',
   data: () => ({
     code: '',

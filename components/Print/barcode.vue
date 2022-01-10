@@ -21,6 +21,7 @@
 <script>
 import VueBarcode from 'vue-barcode'
 export default {
+  name: 'PrintBarcode',
   components: {
     barcode: VueBarcode
   },

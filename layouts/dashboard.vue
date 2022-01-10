@@ -101,7 +101,6 @@
       <template #append>
         <v-menu
           v-model="sidebarsetting"
-          :close-on-content-click="false"
           offset-x
           transition="slide-x-transition"
         >
@@ -339,9 +338,13 @@ export default {
     '$vuetify.theme.dark' (val) {
       this.$cookies.set('dark', val)
     },
-    autobackup (val) {
-      this.$store.commit('BACKUP', val)
+    '$vuetify.breakpoint.mdAndDown' (val) {
+      this.mini = val
     }
+    // ,
+    // autobackup (val) {
+    // this.$store.commit('BACKUP', val)
+    // }
   },
   beforeCreate () {
     this.$vuetify.theme.dark = (this.$cookies.get('dark') === true)

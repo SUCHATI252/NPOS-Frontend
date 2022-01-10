@@ -1,89 +1,77 @@
 <template>
-  <v-form ref="form_forgot" @submit.prevent="forgot">
-    <v-card class="pa-5" rounded="lg" elevation="5">
-      <v-alert
-        v-model="forgot_alert_success"
-        dense
-        text
-        type="success"
-      >
-        The code and link has been sent to {{ email_text }}.
-        <br>
-        Please check your email.
-      </v-alert>
-      <v-sheet v-if="!forgot_alert_success">
-        <v-card-title class="pb-1 title justify-center">
-          <div>
-            <div class="d-flex align-start justify-center">
-              <v-icon size="100">
-                mdi-lock-reset
-              </v-icon>
-            </div>
-            <div class="d-flex align-end justify-center">
-              <span class="text-h4 font-weight-bold">
-                {{ $t('forgot.title') }}
-              </span>
-            </div>
-          </div>
-        </v-card-title>
-        <v-card-text class="pt-0 pb-10">
-          <v-sheet class="pb-5 text-center">
-            <span class="caption grey--text text--darken-1">
-              {{ $t('forgot.sub_email_title') }}
-            </span>
-            <br>
-            <span class="caption grey--text text--darken-1">
-              {{ $t('forgot.sub_email') }}
-            </span>
-          </v-sheet>
-          <v-text-field
-            v-model="email"
-            :rules="[
-              v => !!v || $t('forgot.val_data'),
-              v => /.+@.+\..+/.test(v) || $t('forgot.val_email'),
-              check_gmail || $t('forgot.no_gmail')
-            ]"
-            placeholder="yourname@gmail.com"
-            prepend-inner-icon="mdi-email-outline"
-            :label="$t('forgot.email')"
-            validate-on-blur
-            outlined
-            autofocus
-            type="email"
-          />
-          <v-btn
-            large
-            block
-            type="submit"
-            color="primary"
-            v-text="$t('forgot.send')"
-          />
-        </v-card-text>
-        <!--<v-card-actions class="pb-5 pt-0">
-          <v-spacer />
-          <v-btn
+  <v-container class="fill-height justify-center">
+    <app-bar />
+    <v-col md="6" lg="4" sm="7">
+      <v-form ref="form_forgot" @submit.prevent="forgot">
+        <v-card class="pa-5" rounded="lg" elevation="5">
+          <v-alert
+            v-model="forgot_alert_success"
+            dense
             text
-            small
-            color="primary"
-            class="caption"
-            :to="localePath('/login')"
+            type="success"
           >
-            <v-icon small class="mr-1">
-              mdi-arrow-left-circle-outline
-            </v-icon>
-            {{ $t('login.title') }}
-          </v-btn>
-          <v-spacer />
-        </v-card-actions> -->
-      </v-sheet>
-    </v-card>
-  </v-form>
+            The code and link has been sent to {{ email_text }}.
+            <br>
+            Please check your email.
+          </v-alert>
+          <v-sheet v-if="!forgot_alert_success">
+            <v-card-title class="pb-1 title justify-center">
+              <div>
+                <div class="d-flex align-start justify-center">
+                  <v-icon size="100">
+                    mdi-lock-reset
+                  </v-icon>
+                </div>
+                <div class="d-flex align-end justify-center">
+                  <span class="text-h4 font-weight-bold">
+                    {{ $t('forgot.title') }}
+                  </span>
+                </div>
+              </div>
+            </v-card-title>
+            <v-card-text class="pt-0 pb-10">
+              <v-sheet class="pb-5 text-center">
+                <span class="caption grey--text text--darken-1">
+                  {{ $t('forgot.sub_email_title') }}
+                </span>
+                <br>
+                <span class="caption grey--text text--darken-1">
+                  {{ $t('forgot.sub_email') }}
+                </span>
+              </v-sheet>
+              <v-text-field
+                v-model="email"
+                :rules="[
+                  v => !!v || $t('forgot.val_data'),
+                  v => /.+@.+\..+/.test(v) || $t('forgot.val_email'),
+                  check_gmail || $t('forgot.no_gmail')
+                ]"
+                placeholder="yourname@gmail.com"
+                prepend-inner-icon="mdi-email-outline"
+                :label="$t('forgot.email')"
+                validate-on-blur
+                outlined
+                autofocus
+                type="email"
+              />
+              <v-btn
+                large
+                block
+                type="submit"
+                color="primary"
+                v-text="$t('forgot.send')"
+              />
+            </v-card-text>
+          </v-sheet>
+        </v-card>
+      </v-form>
+    </v-col>
+  </v-container>
 </template>
 
 <script>
 export default {
   name: 'ForgotpasswordPage',
-  layout: 'guest',
   auth: 'guest',
   data: () => ({
     email: '',
@@ -130,7 +118,7 @@ export default {
               this.email = ''
               this.$refs.email.focus()
               this.$store.commit('SET_ERROR', 'exit_email')
-            } else if (res.nosend) {
+            } else if (res.no_send) {
               this.email = ''
               this.$refs.email.focus()
               this.$store.commit('SET_ERROR', 'No_Send')

@@ -422,14 +422,19 @@
           <v-row no-gutters>
             <v-col v-for="(button, i) in [['0'],['10','3'],['20','3'],['50','4']]" :key="i" :cols="button[1] || ''" class="pa-1">
               <v-card
-                class="pa-4 text-center"
+                :class="button[1] || 'text-center pa-4'"
                 tile
                 :dark="!button[1]"
-                :color="button[1] ? '' : 'primary'"
+                :color="button[1] || 'primary'"
                 outlined
                 @click="addcash(button[0])"
               >
-                <span class="headline font-weight-black">
+                <v-img
+                  v-if="button[1]"
+                  alt=""
+                  :src="`/images/bank/B${button[0]}.gif`"
+                />
+                <span v-else class="headline font-weight-black">
                   <!-- transparent--text"> -->
                   {{ button[0] }}
                 </span>
@@ -440,14 +445,19 @@
           <v-row no-gutters>
             <v-col v-for="(button, i) in [['1'],['2'],['3'],['100','4']]" :key="i" :cols="button[1] || ''" class="pa-1">
               <v-card
-                class="pa-4 text-center"
+                :class="button[1] || 'text-center pa-4'"
                 tile
                 :dark="!button[1]"
-                :color="button[1] ? '' : 'primary'"
+                :color="button[1] || 'primary'"
                 outlined
                 @click="addcash(button[0])"
               >
-                <span class="headline font-weight-black">
+                <v-img
+                  v-if="button[1]"
+                  alt=""
+                  :src="`/images/bank/B${button[0]}.gif`"
+                />
+                <span v-else class="headline font-weight-black">
                   <!-- transparent--text"> -->
                   {{ button[0] }}
                 </span>
@@ -458,14 +468,19 @@
           <v-row no-gutters>
             <v-col v-for="(button, i) in [['4'],['5'],['6'],['500','4']]" :key="i" :cols="button[1] || ''" class="pa-1">
               <v-card
-                class="pa-4 text-center"
+                :class="button[1] || 'text-center pa-4'"
                 tile
                 :dark="!button[1]"
-                :color="button[1] ? '' : 'primary'"
+                :color="button[1] || 'primary'"
                 outlined
                 @click="addcash(button[0])"
               >
-                <span class="headline font-weight-black">
+                <v-img
+                  v-if="button[1]"
+                  alt=""
+                  :src="`/images/bank/B${button[0]}.gif`"
+                />
+                <span v-else class="headline font-weight-black">
                   <!-- transparent--text"> -->
                   {{ button[0] }}
                 </span>
@@ -476,14 +491,19 @@
           <v-row no-gutters>
             <v-col v-for="(button, i) in [['7'],['8'],['9'],['1000','4']]" :key="i" :cols="button[1] || ''" class="pa-1">
               <v-card
-                class="pa-4 text-center"
+                :class="button[1]||'text-center pa-4'"
                 tile
                 :dark="!button[1]"
-                :color="button[1] ? '' : 'primary'"
+                :color="button[1] || 'primary'"
                 outlined
                 @click="addcash(button[0])"
               >
-                <span class="headline font-weight-black">
+                <v-img
+                  v-if="button[1]"
+                  alt=""
+                  :src="`/images/bank/B${button[0]}.gif`"
+                />
+                <span v-else class="headline font-weight-black">
                   <!-- transparent--text"> -->
                   {{ button[0] }}
                 </span>
